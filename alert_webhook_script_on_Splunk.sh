@@ -65,7 +65,7 @@ App_Header=$App_Header_Key":"$App_Header_Value
 
 echo "trying to curl" >> script.log
 
-curl -H "$App_Header" -H "Content-Type:application/json" -d "{'SPLUNK_ARG_0':'$script_name', 'SPLUNK_ARG_1':'$number_of_events', 'SPLUNK_ARG_2':'$search_terms', 'SPLUNK_ARG_3':'$query_string', 'SPLUNK_ARG_4':'$name_of_report', 'SPLUNK_ARG_5':'$trigger_reason', 'SPLUNK_ARG_6':'$browser_url'}" https://stg-csharptestfunction.azurewebsites.net/api/AlertToViber >> script.log 2>&1
+curl --proxy http://dev-proxy.db.rakuten.co.jp:9501 -H "$App_Header" -H "Content-Type:application/json" -d "{'SPLUNK_ARG_0':'$script_name', 'SPLUNK_ARG_1':'$number_of_events', 'SPLUNK_ARG_2':'$search_terms', 'SPLUNK_ARG_3':'$query_string', 'SPLUNK_ARG_4':'$name_of_report', 'SPLUNK_ARG_5':'$trigger_reason', 'SPLUNK_ARG_6':'$browser_url'}" https://stg-csharptestfunction.azurewebsites.net/api/AlertToViber >> script.log 2>&1
 
 echo "curl end" >> script.log
 
