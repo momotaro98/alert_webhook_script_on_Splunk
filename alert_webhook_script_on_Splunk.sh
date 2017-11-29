@@ -63,20 +63,23 @@ App_Header_Key="X-Script-On-Splunk"
 App_Header_Value="xxx"
 App_Header=$App_Header_Key":"$App_Header_Value
 
-echo "trying to curl" >> script.log
+# You should modify this if the target alert URI changes
+Dest_APIURI="https://stg-csharptestfunction.azurewebsites.net/api/AlertToViber"
 
-# fail
-command="curl -H \"$App_Header\" -H \"Content-Type:application/json\" -d \"{'SPLUNK_ARG_0':'$script_name', 'SPLUNK_ARG_1':'$number_of_events', 'SPLUNK_ARG_2':'$search_terms', 'SPLUNK_ARG_3':'$query_string', 'SPLUNK_ARG_4':'$name_of_report', 'SPLUNK_ARG_5':'$trigger_reason', 'SPLUNK_ARG_6':'$browser_url'}\" https://stg-csharptestfunctionasdfasdfadfdaddad.azurewebsites.net/api/AlertToViber >> script.log 2>&1"
+# stb-dev-proxy and dev-proxy URI
+Stb_Dev_Proxy_Option=""
+Dev_Proxy_Option=""
 
-# success
-command2="curl -H \"$App_Header\" -H \"Content-Type:application/json\" -d \"{'SPLUNK_ARG_0':'$script_name', 'SPLUNK_ARG_1':'$number_of_events', 'SPLUNK_ARG_2':'$search_terms', 'SPLUNK_ARG_3':'$query_string', 'SPLUNK_ARG_4':'$name_of_report', 'SPLUNK_ARG_5':'$trigger_reason', 'SPLUNK_ARG_6':'$browser_url'}\" https://stg-csharptestfunction.azurewebsites.net/api/AlertToViber >> script.log 2>&1"
+# stb-dev-proxy
+cmd_stb_dev_proxy="curl \"$Stb_Dev_Proxy_Option\" -H \"$App_Header\" -H \"Content-Type:application/json\" -d \"{'SPLUNK_ARG_0':'$script_name', 'SPLUNK_ARG_1':'$number_of_events', 'SPLUNK_ARG_2':'$search_terms', 'SPLUNK_ARG_3':'$query_string', 'SPLUNK_ARG_4':'$name_of_report', 'SPLUNK_ARG_5':'$trigger_reason', 'SPLUNK_ARG_6':'$browser_url'}\" \"$Dest_APIURI\" >> script.log 2>&1"
 
-# fail
-command3="curl -H \"$App_Header\" -H \"Content-Type:application/json\" -d \"{'SPLUNK_ARG_0':'$script_name', 'SPLUNK_ARG_1':'$number_of_events', 'SPLUNK_ARG_2':'$search_terms', 'SPLUNK_ARG_3':'$query_string', 'SPLUNK_ARG_4':'$name_of_report', 'SPLUNK_ARG_5':'$trigger_reason', 'SPLUNK_ARG_6':'$browser_url'}\" https://stg-csharpalsalskjflajsdlfajdftestfunction.azurewebsites.net/api/AlertToViber >> script.log 2>&1"
+# dev-proxy
+cmd_dev_proxy="curl \"$Dev_Proxy_Option\" -H \"$App_Header\" -H \"Content-Type:application/json\" -d \"{'SPLUNK_ARG_0':'$script_name', 'SPLUNK_ARG_1':'$number_of_events', 'SPLUNK_ARG_2':'$search_terms', 'SPLUNK_ARG_3':'$query_string', 'SPLUNK_ARG_4':'$name_of_report', 'SPLUNK_ARG_5':'$trigger_reason', 'SPLUNK_ARG_6':'$browser_url'}\" \"$Dest_APIURI\" >> script.log 2>&1"
 
-# command2 runs
-eval ${command} || eval ${command2} || eval ${command3}
+echo "trying to execute curl" >> script.log
 
-echo "curl end" >> script.log
+eval ${cmd_stb_dev_proxy} || eval ${cmd_dev_proxy}
+
+echo "finished executing curl" >> script.log
 
 echo "script end "`date` >> script.log
