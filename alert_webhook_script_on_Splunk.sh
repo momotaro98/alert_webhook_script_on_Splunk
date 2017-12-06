@@ -63,7 +63,7 @@ App_Header_Key="X-Script-On-Splunk"
 App_Header_Value="xxx"
 App_Header=$App_Header_Key":"$App_Header_Value
 
-Dest_APIURI="https://stg-csharptestfunction.azurewebsites.net/api/AlertToViber"
+Dest_APIURI="https://alerttoviber.azurewebsites.net/api/AlertToViber"
 
 Stb_Dev_Proxy_Option="--proxy http://stb-dev-proxy.db.rakuten.co.jp:9501"
 Dev_Proxy_Option="--proxy http://dev-proxy.db.rakuten.co.jp:9501"
@@ -71,10 +71,10 @@ Dev_Proxy_Option="--proxy http://dev-proxy.db.rakuten.co.jp:9501"
 echo "trying to curl" >> script.log
 
 # stb-dev-proxy
-cmd_stb_dev_proxy="curl \"$Stb_Dev_Proxy_Option\" -H \"$App_Header\" -H \"Content-Type:application/json\" -d \"{'SPLUNK_ARG_0':'$script_name', 'SPLUNK_ARG_1':'$number_of_events', 'SPLUNK_ARG_2':'$search_terms', 'SPLUNK_ARG_3':'$query_string', 'SPLUNK_ARG_4':'$name_of_report', 'SPLUNK_ARG_5':'$trigger_reason', 'SPLUNK_ARG_6':'$browser_url'}\" \"$Dest_APIURI\" >> script.log 2>&1"
+cmd_stb_dev_proxy="curl $Stb_Dev_Proxy_Option -H \"$App_Header\" -H \"Content-Type:application/json\" -d \"{'SPLUNK_ARG_0':'$script_name', 'SPLUNK_ARG_1':'$number_of_events', 'SPLUNK_ARG_2':'$search_terms', 'SPLUNK_ARG_3':'$query_string', 'SPLUNK_ARG_4':'$name_of_report', 'SPLUNK_ARG_5':'$trigger_reason', 'SPLUNK_ARG_6':'$browser_url'}\" \"$Dest_APIURI\" >> script.log 2>&1"
 
 # dev-proxy
-cmd_dev_proxy="curl \"$Dev_Proxy_Option\" -H \"$App_Header\" -H \"Content-Type:application/json\" -d \"{'SPLUNK_ARG_0':'$script_name', 'SPLUNK_ARG_1':'$number_of_events', 'SPLUNK_ARG_2':'$search_terms', 'SPLUNK_ARG_3':'$query_string', 'SPLUNK_ARG_4':'$name_of_report', 'SPLUNK_ARG_5':'$trigger_reason', 'SPLUNK_ARG_6':'$browser_url'}\" \"$Dest_APIURI\" >> script.log 2>&1"
+cmd_dev_proxy="curl $Dev_Proxy_Option -H \"$App_Header\" -H \"Content-Type:application/json\" -d \"{'SPLUNK_ARG_0':'$script_name', 'SPLUNK_ARG_1':'$number_of_events', 'SPLUNK_ARG_2':'$search_terms', 'SPLUNK_ARG_3':'$query_string', 'SPLUNK_ARG_4':'$name_of_report', 'SPLUNK_ARG_5':'$trigger_reason', 'SPLUNK_ARG_6':'$browser_url'}\" \"$Dest_APIURI\" >> script.log 2>&1"
 
 # execute curl
 eval ${cmd_stb_dev_proxy} || eval ${cmd_dev_proxy}
