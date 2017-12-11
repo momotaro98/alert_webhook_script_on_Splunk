@@ -1,6 +1,6 @@
 #!/bin/sh
 
-echo "script started "`date` >> script.log
+echo "script started "`date` > script.log
 
 echo "checking arg 0" >> script.log
 if [ -z "$0" ]; then
